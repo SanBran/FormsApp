@@ -43,11 +43,41 @@ export const getFormbyID = async (id) => {
         }
       
 }
+export const getFilledFormbyID = async (id) => {
+        try {
+          const data = {
+            _id: id,
+           
+          };
+          const response = await axios.post(`/oneFilledForm`, data);
+          return response.data
+        } catch (error) {
+          throw Error(error.message);
+        }
+      
+}
 
 export const sendForm = async (data) => {
     console.log(data);
         try {
           const response = await axios.post(`/sendForm`, data);
+          console.log(response.data);
+          return response.data
+        } catch (error) {
+          throw Error(error.message);
+        }
+      
+}
+
+export const putForm = async ({_id,form}) => {
+    
+        try {
+          const data = {
+            _id: _id,
+            form: form
+           
+          };
+          const response = await axios.put(`/oneForm`, data);
           console.log(response.data);
           return response.data
         } catch (error) {

@@ -1,11 +1,12 @@
 import { useState } from "react"
 import { sendForm } from "../../services/Services";
+import { useNavigate } from "react-router-dom";
 
 function Interface({input,respuestas}) {
     const [close, setClose] = useState(true)
     const [next, setNext] = useState(false)
     
-    
+    const navigate = useNavigate()
    
     const handleNext = () => {
                 respuestas.push(input)

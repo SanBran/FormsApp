@@ -1,26 +1,85 @@
+import {  useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { getFilledFormbyID, putForm } from "../../services/Services";
 
-function UpdateForm({jsonForm}) {
+function UpdateForm() {
 
-    const inputs = jsonForm.items
+    const {_id} = useParams()
+    const [id,setId] = useState(_id)
+    const [jsonForm,setjsonForm] = useState([])
+    const [formValues, setFormValues] = useState([]);
+    const [prueba, setPrueba] = useState("");
+
+        const navigate = useNavigate()
     
+
+    useEffect(() => {
+        async function fetchData() {
+          try {
+            const response = await getFilledFormbyID(id);
+            setjsonForm(response)
+            setFormValues(response.form)
+          } catch (error) {
+            console.error("Error fetching data:", error);
+          }
+        }
+    
+        fetchData();
+      }, [_id]);
+
+      
+
+      const handleChange = (e, inputName, index) => {
+        const newValue = e.target.value;
+        setPrueba(e.target.value)
+        
+      };
+      const handleSave = (e, input, index) => {
+        
+        formValues[index].value = prueba
+      };
+
+      const handleSubmit = async (e) => {
+        e.preventDefault()
+        
+            const form ={
+                _id: _id,
+                form: formValues
+            }
+            console.log(form);
+            const resp = await putForm(form)
+            
+                swal("Form Updated!","success");
+                  navigate(`/`);    
+            
+      }
+
+      const handleCancel = () => {
+        navigate(`/`);  
+      }
+     
+      console.log(prueba);
+      console.log(formValues);
   return (
-    <form className=" border shadow-md rounded-lg flex flex-col lg:mx-56 mx-14 p-10 "  >
-        {inputs?.map((i,index) => {
+    <form className=" relative border shadow-md rounded-lg flex flex-col lg:mx-56 mx-14 p-10 top-40 "  >
+        <h1 className=" text-center text-4xl font-semibold mb-10">Update your form</h1>
+        {!jsonForm  ? <h1 className=" text-center text-3xl">Loading...</h1> : formValues?.map((i,index) => {
            if (i.options) {
             return (
                 <div className="flex flex-col mb-3 ">
                     <label htmlFor={i.name}>{i.label}</label>
                     <select
-                    className="border rounded-md p-1"
-                    type={i.type}
-                    name={i.name}
-                    required={i.required}
+                    className="border rounded-md p-1"                   
+                    placeholder={i.value}
+                    onChange={(e) => handleChange(e, i, index)}
+                    onBlur={(e) => handleSave(e, i, index)}
                     key={index}>
                         {i.options.map((option,index) => {
-                            console.log(option.label);
+                            
                             return (<option value={option.value} key={index}>{option.label}</option>)
                         })}
                     </select>
+                    <button type="button" onClick={(e) => handleSave(e, i, index)} className="lg:py-2 w-1/12  mx-auto mt-3 py-2 px-5 bg-slate-700 text-cyan-50 rounded-md lg:text-md font-semibold">Done</button>
                 </div>
             )
            } else if(i.type !== "submit" && i.type !== "checkbox"){
@@ -30,17 +89,19 @@ function UpdateForm({jsonForm}) {
                   <label htmlFor={i.name}>{i.label}</label>
                   <input
                   className="border rounded-md p-2"
-                  placeholder={i.label}
+                  placeholder={i.value}
                   type={i.type}
                   label={i.label}
                   name={i.name}
                   required={i.required}
+                  onChange={(e) => handleChange(e, i, index)}
                   key={index} />
+                  <button type="button" onClick={(e) => handleSave(e, i, index)} className="lg:py-2 w-1/12  mx-auto mt-3 py-2 px-5 bg-slate-700 text-cyan-50 rounded-md lg:text-md font-semibold">Done</button>
               </div>
                 )
            } else if(i.type === "checkbox" ){
             return (
-              <div className="flex border rounded-md mb-3 justify-evenly p-2 mt-3 shadow-sm ">
+              <div className="flex border flex-col rounded-md mb-3 justify-evenly p-2 mt-3 shadow-sm ">
                 
                   <label className=" w-4/5" htmlFor={i.name}>{i.label}</label>
                   <input
@@ -49,14 +110,21 @@ function UpdateForm({jsonForm}) {
                   type={i.type}
                   label={i.label}
                   name={i.name}
+                  onChange={(e) => handleChange(e, i, index)}
                   required={i.required}
+                  onBlur={(e) => handleSave(e, i, index)}
                   key={index} />
+                  <button type="button" onClick={(e) => handleSave(e, i, index)} className="lg:py-2 w-1/12  mx-auto mt-3 py-2 px-5 bg-slate-700 text-cyan-50 rounded-md lg:text-md font-semibold">Done</button>
               </div>
                 )
            }
            
+       
         })}
-        <button className="border rounded-lg xl:w-2/5 p-3 mx-auto mt-3 bg-lime-400 text-zinc-50 font-bold shadow-inner ">Submit</button>
+        <div className=" w-full flex justify-around">
+            <button type="button" onClick={handleSubmit} className="lg:py-2 w-1/4  py-2 px-5 bg-lime-500 text-cyan-50 rounded-md lg:text-md font-semibold">Acept</button>
+            <button type="button" onClick={handleCancel} className="lg:py-2 w-1/4  py-2 px-5 bg-red-600 text-cyan-50 rounded-md lg:text-md font-semibold">Cancel</button>
+        </div>
     </form>
   )
 }
