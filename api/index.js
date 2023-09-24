@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const mongoose = require('mongoose')
 
 const PORT = process.env.PORT || 8000;
-const MONGO_URL = "mongodb://127.0.0.1:27017/forms";
+const MONGO_URL = process.env.MONGO_URL;
 
 const server = express();
 
