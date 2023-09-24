@@ -1,4 +1,4 @@
-const Forms = require("../models/Models");
+const {Forms} = require("../models/Models");
 
 
 const getForms = async (req, res) => {

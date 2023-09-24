@@ -1,4 +1,4 @@
-import Form from "../../components/Form/Form"
+
 import Landing from "../../components/Landing/Landing"
 
 function Home() {

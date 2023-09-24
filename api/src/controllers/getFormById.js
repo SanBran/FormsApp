@@ -1,4 +1,4 @@
-const Forms = require("../models/Models");
+const {Forms} = require("../models/Models");
 
 
 const getFormById = async (req, res) => {

@@ -1,5 +1,5 @@
 
-function Form({jsonForm}) {
+function UpdateForm({jsonForm}) {
 
     const inputs = jsonForm.items
     
@@ -62,4 +62,4 @@ function Form({jsonForm}) {
 }
 
 
-export default Form
+export default UpdateForm

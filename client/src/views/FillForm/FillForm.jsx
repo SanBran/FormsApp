@@ -22,9 +22,8 @@ function FillForm() {
       fetchData();
     }, [_id]);
   
-    console.log(jsonForm);
   return (
-    <div className="pt-28">
+    <div className="">
         {jsonForm ? (
       <Form jsonForm={jsonForm} />
     ) : (

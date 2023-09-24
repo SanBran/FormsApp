@@ -7,4 +7,10 @@ const formSchema = new mongoose.Schema({
 )
 const Forms = mongoose.model('Forms', formSchema);
 
-module.exports = Forms;
+const filledFormSchema = new mongoose.Schema({
+    form: {type: Array}, 
+}
+)
+const FilledForms = mongoose.model('FilledForms', filledFormSchema);
+
+module.exports = {Forms, FilledForms};

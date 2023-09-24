@@ -1,4 +1,4 @@
-const Forms = require('../models/Models')
+const {Forms} = require('../models/Models')
 
 const postForm = async (req, res) => {
   

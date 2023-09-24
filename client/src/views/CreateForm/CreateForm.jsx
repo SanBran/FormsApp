@@ -1,7 +1,7 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
 import { postNewForm } from "../../services/Services"
-import FormPreview from "../../components/Form/FormPreview"
+import FormPreview from "../../components/Forms/FormPreview"
 import swal from 'sweetalert';
 
 function CreateForm() {

@@ -43,3 +43,15 @@ export const getFormbyID = async (id) => {
         }
       
 }
+
+export const sendForm = async (data) => {
+    console.log(data);
+        try {
+          const response = await axios.post(`/sendForm`, data);
+          console.log(response.data);
+          return response.data
+        } catch (error) {
+          throw Error(error.message);
+        }
+      
+}
