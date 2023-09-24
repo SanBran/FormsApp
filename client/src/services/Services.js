@@ -20,8 +20,22 @@ export const getForms = async ({email}) => {
             email: email,
            
           };
-          console.log(userData);
           const response = await axios.post(`/forms`, userData);
+          return response.data
+        } catch (error) {
+          throw Error(error.message);
+        }
+      
+}
+
+export const getFormbyID = async (id) => {
+    console.log(id);
+        try {
+          const data = {
+            _id: id,
+           
+          };
+          const response = await axios.post(`/oneForm`, data);
           console.log(response.data);
           return response.data
         } catch (error) {

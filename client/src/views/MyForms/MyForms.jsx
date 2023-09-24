@@ -1,7 +1,7 @@
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getForms } from "../../services/Services";
-import FormPreview from "../../components/Form/FormPreview";
+import FormPreview from "../../components/Forms/FormPreview";
 
 function MyForms() {
   const {email} = useParams()
@@ -31,7 +31,7 @@ function MyForms() {
       <div className=" z-0 border mt-20 grid grid-cols-3 gap-5 px-20 pb-10 pt-8 top-20 items-center shadow-xl">
       {forms?.map((form,index) => {
         return (
-          <Link to={`/fillAForm/${form._id}`}>
+          <Link to={`/fillForm/${form._id}`}>
             <FormPreview jsonForm={form.items} />
           </Link>
         )

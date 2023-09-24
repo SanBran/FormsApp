@@ -1,12 +1,12 @@
 
 function Form({jsonForm}) {
+
     const inputs = jsonForm.items
-    console.log(inputs);
+    
   return (
-    <form className=" border shadow-md rounded-lg flex flex-col justify-end  p-10"  >
-        {inputs.map((i,index) => {
+    <form className=" border shadow-md rounded-lg flex flex-col lg:mx-56 mx-14 p-10 "  >
+        {inputs?.map((i,index) => {
            if (i.options) {
-            console.log(i.options)
             return (
                 <div className="flex flex-col mb-3 ">
                     <label htmlFor={i.name}>{i.label}</label>
