@@ -8,6 +8,7 @@ export const postNewForm = async (data) => {
           console.log(response.data);
           return response.data
         } catch (error) {
+          console.log(error);
           throw Error(error.message);
         }
       
@@ -23,6 +24,7 @@ export const getForms = async ({email}) => {
           const response = await axios.post(`/forms`, userData);
           return response.data
         } catch (error) {
+          console.log(error);
           throw Error(error.message);
         }
       
