@@ -5,7 +5,7 @@ const postForm = async (req, res) => {
   try {
     const formData = {
       email: req.body.email,
-      form: req.body.file,
+      items: req.body.items,
     };
 
     const newForm = await Forms.create(formData);

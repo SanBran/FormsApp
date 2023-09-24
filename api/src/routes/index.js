@@ -5,7 +5,7 @@ const {getForms} = require('../controllers/getForms')
 const router = Router();
 
 router.post("/newForm", postForm);
-router.get("/forms", getForms);
+router.post("/forms", getForms);
 // router.delete("/fav", deleteFav);
 
 module.exports = router;

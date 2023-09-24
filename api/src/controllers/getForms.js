@@ -3,7 +3,6 @@ const Forms = require("../models/Models");
 
 const getForms = async (req, res) => {
   const { email } = req.body;
-  console.log(req.body);
 
   try {
     const forms = await Forms.find({email});

@@ -1,6 +1,6 @@
 
 function FormPreview({jsonForm}) {
-    const inputs = jsonForm.items
+    const inputs = jsonForm
   return (
     
 <form className=" border shadow-md rounded-lg flex flex-col justify-end  p-10"  >

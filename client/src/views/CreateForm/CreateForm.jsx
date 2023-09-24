@@ -1,14 +1,17 @@
 import { useState } from "react"
 import { useNavigate } from "react-router-dom"
-import { postNewForm } from "../../services/Upload"
+import { postNewForm } from "../../services/Services"
 import FormPreview from "../../components/Form/FormPreview"
+import swal from 'sweetalert';
 
 function CreateForm() {
+
+  const navigate = useNavigate();
 
   const [preview, setPreview] = useState(false)
   const [create,setCreate] = useState({
     email:"",
-    file:""
+    items:""
   })
   const handleChange = (event) => {
     const property = event.target.name;
@@ -25,7 +28,7 @@ function CreateForm() {
       reader.onload = (event) =>{
         try {
           const parsedJson = JSON.parse(event.target.result);
-          setCreate({ ...create, file: parsedJson })
+          setCreate({ ...create, items: parsedJson.items })
         } catch (error) {
           console.error('Error parsing JSON:', error);
         }
@@ -40,7 +43,12 @@ function CreateForm() {
   const handleSubmit =(event) =>{
     event.preventDefault()
     postNewForm(create)
-    alert("Form crated!")
+    swal("Form Crated!","Let's see your forms","success");
+    
+      navigate(`/myForms/${create.email}`);
+   
+    
+    
 
   }
 
@@ -66,7 +74,7 @@ function CreateForm() {
     :
     <div className=" z-0 absolute border flex flex-col gap-5 px-20 pb-10 pt-8 top-20 items-center shadow-xl">
       <h1 className=" text-center mb-10 text-4xl">This is a preview</h1>
-      <FormPreview jsonForm={create.file}/>
+      <FormPreview jsonForm={create.items}/>
       <button onClick={handleSubmit} className='py-2 px-5 bg-slate-700 text-cyan-50 rounded-md font-semibold'>Upload</button>
     </div>  
     }
