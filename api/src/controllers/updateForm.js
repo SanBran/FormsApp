@@ -2,7 +2,7 @@ const {FilledForms} = require('../models/Models')
 
 const updateForm = async (req, res) => {
 const {_id, form} =req.body
-    console.log(req.body);
+    
   try {
     const updatedData = {
       $set: {

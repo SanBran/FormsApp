@@ -1,10 +1,12 @@
 
+
 function FormPreview({jsonForm}) {
+  console.log(jsonForm);
     const inputs = jsonForm
   return (
     
 <form className=" border shadow-md rounded-lg flex flex-col justify-end  p-10"  >
-        {inputs.map((i,index) => {
+        {inputs?.map((i,index) => {
            if (i.options) {
             return (
                 <div className="flex flex-col mb-3 ">

@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { sendForm } from "../../services/Services";
 import { useNavigate } from "react-router-dom";
 
@@ -7,6 +7,8 @@ function Interface({input,respuestas}) {
     const [next, setNext] = useState(false)
     
     const navigate = useNavigate()
+
+    
    
     const handleNext = () => {
                 respuestas.push(input)
@@ -14,8 +16,23 @@ function Interface({input,respuestas}) {
     }
 
     const handleChange = (event) => {
+        if (event.target.type === "checkbox") {
+            input.value = event.target.checked
+        setNext(true)
+        }
         input.value = event.target.value
         setNext(true)
+        
+      }
+    const handleChangeCheckBox = (event) => {
+        if (input.value === "" ||input.value === false ) {
+            input.value = true
+        setNext(true)
+        } else {
+            input.value = false
+        setNext(true)
+        }
+        
       }
 
       const handleSubmit = async (e) => {
@@ -24,7 +41,6 @@ function Interface({input,respuestas}) {
             const form ={
                 form: respuestas
             }
-            console.log(form);
             const resp = await sendForm(form)
             if (resp.form) {
                 swal("Form Crated!",`With this ID, you can access again to your form answer's and update them if you want, so it's important that you save it. ID: ${resp.form._id} `,"success");
@@ -62,7 +78,8 @@ function Interface({input,respuestas}) {
                   placeholder={input.label}
                   type={input.type}
                   label={input.label}
-                  onChange={handleChange}
+                  value={false}
+                  onChange={handleChangeCheckBox}
                   required={input.required}
                    />
                   : input.type === "submit" ?
@@ -71,7 +88,7 @@ function Interface({input,respuestas}) {
                     <input onChange={handleChange} className=" bg-transparent  border-b-[1px]" type={input.type} />
         }
         </div>
-        { next && input.type !== "submit" ? <button onClick={handleNext} type="button">➜</button>
+        { !input.type || next && input.type !== "submit" ? <button onClick={handleNext} type="button">➜</button>
         :
         null}
         

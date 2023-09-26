@@ -30,13 +30,27 @@ function UpdateForm() {
       
 
       const handleChange = (e, inputName, index) => {
-        const newValue = e.target.value;
+       
         setPrueba(e.target.value)
-        
+        console.log('change');
       };
+
+      const handleChangeCheckBox = (e,index) => {
+        console.log(formValues[index].value);
+        if (formValues[index].value === "" ||formValues[index].value === false ) {
+          formValues[index].value = true
+        
+        } else {
+          formValues[index].value = false
+        
+        }
+        console.log(formValues[index].value);
+      }
+
       const handleSave = (e, input, index) => {
         
         formValues[index].value = prueba
+        
       };
 
       const handleSubmit = async (e) => {
@@ -46,10 +60,9 @@ function UpdateForm() {
                 _id: _id,
                 form: formValues
             }
-            console.log(form);
             const resp = await putForm(form)
             
-                swal("Form Updated!","success");
+                swal("Form Updated!","","success");
                   navigate(`/`);    
             
       }
@@ -57,9 +70,7 @@ function UpdateForm() {
       const handleCancel = () => {
         navigate(`/`);  
       }
-     
-      console.log(prueba);
-      console.log(formValues);
+    
   return (
     <form className=" relative border shadow-md rounded-lg flex flex-col lg:mx-56 mx-14 p-10 top-40 "  >
         <h1 className=" text-center text-4xl font-semibold mb-10">Update your form</h1>
@@ -72,7 +83,6 @@ function UpdateForm() {
                     className="border rounded-md p-1"                   
                     placeholder={i.value}
                     onChange={(e) => handleChange(e, i, index)}
-                    onBlur={(e) => handleSave(e, i, index)}
                     key={index}>
                         {i.options.map((option,index) => {
                             
@@ -104,17 +114,28 @@ function UpdateForm() {
               <div className="flex border flex-col rounded-md mb-3 justify-evenly p-2 mt-3 shadow-sm ">
                 
                   <label className=" w-4/5" htmlFor={i.name}>{i.label}</label>
-                  <input
+                  {formValues[index].value? <input
                   className="border"
                   placeholder={i.label}
                   type={i.type}
                   label={i.label}
                   name={i.name}
-                  onChange={(e) => handleChange(e, i, index)}
+                  checked
+                  onChange={(e) => handleChangeCheckBox(e,index)}
                   required={i.required}
-                  onBlur={(e) => handleSave(e, i, index)}
                   key={index} />
-                  <button type="button" onClick={(e) => handleSave(e, i, index)} className="lg:py-2 w-1/12  mx-auto mt-3 py-2 px-5 bg-slate-700 text-cyan-50 rounded-md lg:text-md font-semibold">Done</button>
+                :
+                <input
+                  className="border"
+                  placeholder={i.label}
+                  type={i.type}
+                  label={i.label}
+                  name={i.name}
+                  onChange={(e) => handleChangeCheckBox(e,index)}
+                  required={i.required}
+                  key={index} />
+                }
+                 
               </div>
                 )
            }
